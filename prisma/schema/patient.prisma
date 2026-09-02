@@ -1,0 +1,14 @@
+model Patient {
+  id              String   @id @default(uuid())
+  name            String
+  email           String   @unique
+  contactNumber   String?
+
+  userId          String   @unique
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@map("patients")
+}

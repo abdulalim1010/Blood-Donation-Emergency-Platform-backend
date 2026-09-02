@@ -1,6 +1,17 @@
+enum AuthProvider {
+  GOOGLE
+  CREDENTIAL
+}
+
 enum Role {
   SUPER_ADMIN
   ADMIN
   DONOR
   PATIENT
+}
+
+enum UserStatus {
+  ACTIVE
+  BLOCKED
+  DELETED
 }

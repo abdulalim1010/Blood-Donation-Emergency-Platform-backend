@@ -1,19 +1,21 @@
-import express from "express";
+import "dotenv/config";
+import app from "./app.js";
+import { connectRedis } from "./app/lib/redis.js";
 
-const app = express();
-
-app.use(express.json());
-
-app.get("/", (req, res) => {
-  res.json({
-    success: true,
-    message: "Blood Donation Emergency Platform API is running",
-    data: null,
-  });
-});
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+const startServer = async () => {
+  try {
+    await connectRedis();
+
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
+    });
+  } catch (error) {
+    console.error("Server startup failed:", error);
+    process.exit(1);
+  }
+};
+
+startServer();
