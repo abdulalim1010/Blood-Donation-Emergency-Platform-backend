@@ -21,6 +21,8 @@ const config = {
   
   bcrypt_salt_rounds: process.env.BCRYPT_SALT_ROUNDS!,
 
+  	frontend_url: process.env.FRONTEND_URL,
+
   google_client_id: process.env.GOOGLE_CLIENT_ID!,
 
   email_sender: process.env.EMAIL_SENDER!,
