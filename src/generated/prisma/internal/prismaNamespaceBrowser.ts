@@ -51,6 +51,10 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
+  BloodRequest: 'BloodRequest',
+  DonationHistory: 'DonationHistory',
+  Donor: 'Donor',
+  Notification: 'Notification',
   Patient: 'Patient',
   User: 'User'
 } as const
@@ -71,12 +75,78 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
-export const PatientScalarFieldEnum = {
+export const BloodRequestScalarFieldEnum = {
   id: 'id',
+  patientId: 'patientId',
+  bloodGroup: 'bloodGroup',
+  unitsNeeded: 'unitsNeeded',
+  hospitalName: 'hospitalName',
+  location: 'location',
+  contactNumber: 'contactNumber',
+  urgency: 'urgency',
+  neededAt: 'neededAt',
+  description: 'description',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type BloodRequestScalarFieldEnum = (typeof BloodRequestScalarFieldEnum)[keyof typeof BloodRequestScalarFieldEnum]
+
+
+export const DonationHistoryScalarFieldEnum = {
+  id: 'id',
+  donorId: 'donorId',
+  bloodRequestId: 'bloodRequestId',
+  donationDate: 'donationDate',
+  status: 'status',
+  message: 'message',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DonationHistoryScalarFieldEnum = (typeof DonationHistoryScalarFieldEnum)[keyof typeof DonationHistoryScalarFieldEnum]
+
+
+export const DonorScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
   name: 'name',
   email: 'email',
-  contactNumber: 'contactNumber',
+  phoneNo: 'phoneNo',
+  address: 'address',
+  bloodGroup: 'bloodGroup',
+  lastDonationDate: 'lastDonationDate',
+  nextDonationDate: 'nextDonationDate',
+  isAvailable: 'isAvailable',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DonorScalarFieldEnum = (typeof DonorScalarFieldEnum)[keyof typeof DonorScalarFieldEnum]
+
+
+export const NotificationScalarFieldEnum = {
+  id: 'id',
   userId: 'userId',
+  type: 'type',
+  title: 'title',
+  message: 'message',
+  isRead: 'isRead',
+  createdAt: 'createdAt'
+} as const
+
+export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
+
+
+export const PatientScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  name: 'name',
+  email: 'email',
+  phoneNo: 'phoneNo',
+  address: 'address',
+  bloodGroup: 'bloodGroup',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

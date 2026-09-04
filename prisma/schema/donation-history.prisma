@@ -1,0 +1,19 @@
+model DonationHistory {
+  id String @id @default(uuid())
+
+  donorId        String
+  bloodRequestId String
+
+  donationDate DateTime?
+  status       DonationStatus @default(PENDING)
+  message      String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  donor        Donor        @relation(fields: [donorId], references: [id], onDelete: Cascade)
+  bloodRequest BloodRequest @relation(fields: [bloodRequestId], references: [id], onDelete: Cascade)
+
+  @@unique([donorId, bloodRequestId])
+  @@map("donation_history")
+}

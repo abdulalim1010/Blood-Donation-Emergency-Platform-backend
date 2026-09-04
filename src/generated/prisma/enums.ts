@@ -34,3 +34,58 @@ export const UserStatus = {
 } as const
 
 export type UserStatus = (typeof UserStatus)[keyof typeof UserStatus]
+
+
+export const BloodGroup = {
+  A_POSITIVE: 'A_POSITIVE',
+  A_NEGATIVE: 'A_NEGATIVE',
+  B_POSITIVE: 'B_POSITIVE',
+  B_NEGATIVE: 'B_NEGATIVE',
+  AB_POSITIVE: 'AB_POSITIVE',
+  AB_NEGATIVE: 'AB_NEGATIVE',
+  O_POSITIVE: 'O_POSITIVE',
+  O_NEGATIVE: 'O_NEGATIVE'
+} as const
+
+export type BloodGroup = (typeof BloodGroup)[keyof typeof BloodGroup]
+
+
+export const RequestUrgency = {
+  NORMAL: 'NORMAL',
+  URGENT: 'URGENT',
+  EMERGENCY: 'EMERGENCY'
+} as const
+
+export type RequestUrgency = (typeof RequestUrgency)[keyof typeof RequestUrgency]
+
+
+export const BloodRequestStatus = {
+  PENDING: 'PENDING',
+  MATCHED: 'MATCHED',
+  FULFILLED: 'FULFILLED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type BloodRequestStatus = (typeof BloodRequestStatus)[keyof typeof BloodRequestStatus]
+
+
+export const DonationStatus = {
+  PENDING: 'PENDING',
+  ACCEPTED: 'ACCEPTED',
+  REJECTED: 'REJECTED',
+  COMPLETED: 'COMPLETED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type DonationStatus = (typeof DonationStatus)[keyof typeof DonationStatus]
+
+
+export const NotificationType = {
+  REQUEST: 'REQUEST',
+  RESPONSE: 'RESPONSE',
+  DONATION: 'DONATION',
+  SYSTEM: 'SYSTEM',
+  OTHER: 'OTHER'
+} as const
+
+export type NotificationType = (typeof NotificationType)[keyof typeof NotificationType]

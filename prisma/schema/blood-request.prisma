@@ -1,0 +1,24 @@
+model BloodRequest {
+  id        String @id @default(uuid())
+  patientId String
+
+  bloodGroup    BloodGroup
+  unitsNeeded   Int
+  hospitalName  String
+  location      String
+  contactNumber String
+
+  urgency     RequestUrgency @default(NORMAL)
+  neededAt    DateTime
+  description String?
+
+  status BloodRequestStatus @default(PENDING)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  patient         Patient           @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  donationHistory DonationHistory[]
+
+  @@map("blood_requests")
+}
