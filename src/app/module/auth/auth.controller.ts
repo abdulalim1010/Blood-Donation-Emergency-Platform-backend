@@ -9,7 +9,7 @@ import { AppError } from "../../utils/AppError.js";
 import { sendResponse } from "../../utils/sendResponse.js";
 ;
 
-const registerPatient = catchAsync(async (req: Request, res: Response) => {
+const registerUser = catchAsync(async (req: Request, res: Response) => {
 	// const payload = PatientValidation.PatientRegistrationZodSchema.safeParse(req.body);
 
 	// if(!payload.success){
@@ -23,7 +23,7 @@ const registerPatient = catchAsync(async (req: Request, res: Response) => {
 
 	const payload = req.body;
 
-	await AuthService.registerPatient(payload);
+	await AuthService.registerUser(payload);
 
 	// const { accessToken, refreshToken, user, patient } = result;
 
@@ -47,12 +47,12 @@ const registerPatient = catchAsync(async (req: Request, res: Response) => {
 		data: null,
 	});
 });
-const verifyPatientEmail = catchAsync(async (req: Request, res: Response) => {
+const verifyEmail= catchAsync(async (req: Request, res: Response) => {
 	const payload = req.body;
 
-	const result = await AuthService.verifyPatientEmail(payload);
+	const result = await AuthService.verifyEmail(payload);
 
-	const { accessToken, refreshToken, user, patient } = result;
+	const { accessToken, refreshToken, user } = result;
 
 	res.cookie("accessToken", accessToken, {
 		httpOnly: true,
@@ -75,7 +75,7 @@ const verifyPatientEmail = catchAsync(async (req: Request, res: Response) => {
 			accessToken,
 			refreshToken,
 			user,
-			patient,
+			
 		},
 	});
 });
@@ -211,8 +211,8 @@ const resetPassword = catchAsync(async (req: Request, res: Response) => {
 });
 
 export const AuthController = {
-	registerPatient,
-	verifyPatientEmail,
+	registerUser,
+	verifyEmail,
 	loginUser,
 	getMe,
 	refreshToken,

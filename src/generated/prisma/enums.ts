@@ -21,7 +21,8 @@ export const Role = {
   SUPER_ADMIN: 'SUPER_ADMIN',
   ADMIN: 'ADMIN',
   DONOR: 'DONOR',
-  PATIENT: 'PATIENT'
+  PATIENT: 'PATIENT',
+  USER: 'USER'
 } as const
 
 export type Role = (typeof Role)[keyof typeof Role]
