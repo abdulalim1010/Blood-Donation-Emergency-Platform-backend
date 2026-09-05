@@ -4,6 +4,8 @@ import { AuthRoutes } from "./app/module/auth/auth.route.js";
 import { PatientRoutes } from "./app/module/patient/patient.route.js";
 import cookieParser from "cookie-parser";
 import { BloodRequestRoutes } from "./app/module/blood-request/blood-request.route.js";
+import { DonorRoutes } from "./app/module/donor/donor.route.js";
+
 
 
 const app = express();
@@ -17,6 +19,10 @@ app.use("/api/v1/patient", PatientRoutes);
 app.use(
   "/api/v1/patient/blood-requests",
   BloodRequestRoutes,
+);
+app.use(
+  "/api/v1/donor",
+  DonorRoutes,
 );
 
 export default app;
