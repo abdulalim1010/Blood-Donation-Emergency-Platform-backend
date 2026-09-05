@@ -8,7 +8,7 @@ enum Role {
   ADMIN
   DONOR
   PATIENT
-  USER 
+  USER
 }
 
 enum UserStatus {

@@ -87,6 +87,8 @@ export const BloodRequestScalarFieldEnum = {
   neededAt: 'neededAt',
   description: 'description',
   status: 'status',
+  isDeleted: 'isDeleted',
+  deletedAt: 'deletedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -147,6 +149,8 @@ export const PatientScalarFieldEnum = {
   phoneNo: 'phoneNo',
   address: 'address',
   bloodGroup: 'bloodGroup',
+  isDeleted: 'isDeleted',
+  deletedAt: 'deletedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

@@ -32,6 +32,8 @@ export type PatientMinAggregateOutputType = {
   phoneNo: string | null
   address: string | null
   bloodGroup: $Enums.BloodGroup | null
+  isDeleted: boolean | null
+  deletedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -44,6 +46,8 @@ export type PatientMaxAggregateOutputType = {
   phoneNo: string | null
   address: string | null
   bloodGroup: $Enums.BloodGroup | null
+  isDeleted: boolean | null
+  deletedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -56,6 +60,8 @@ export type PatientCountAggregateOutputType = {
   phoneNo: number
   address: number
   bloodGroup: number
+  isDeleted: number
+  deletedAt: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -70,6 +76,8 @@ export type PatientMinAggregateInputType = {
   phoneNo?: true
   address?: true
   bloodGroup?: true
+  isDeleted?: true
+  deletedAt?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -82,6 +90,8 @@ export type PatientMaxAggregateInputType = {
   phoneNo?: true
   address?: true
   bloodGroup?: true
+  isDeleted?: true
+  deletedAt?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -94,6 +104,8 @@ export type PatientCountAggregateInputType = {
   phoneNo?: true
   address?: true
   bloodGroup?: true
+  isDeleted?: true
+  deletedAt?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -179,6 +191,8 @@ export type PatientGroupByOutputType = {
   phoneNo: string
   address: string
   bloodGroup: $Enums.BloodGroup
+  isDeleted: boolean
+  deletedAt: Date | null
   createdAt: Date
   updatedAt: Date
   _count: PatientCountAggregateOutputType | null
@@ -212,6 +226,8 @@ export type PatientWhereInput = {
   phoneNo?: Prisma.StringFilter<"Patient"> | string
   address?: Prisma.StringFilter<"Patient"> | string
   bloodGroup?: Prisma.EnumBloodGroupFilter<"Patient"> | $Enums.BloodGroup
+  isDeleted?: Prisma.BoolFilter<"Patient"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"Patient"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Patient"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Patient"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -226,6 +242,8 @@ export type PatientOrderByWithRelationInput = {
   phoneNo?: Prisma.SortOrder
   address?: Prisma.SortOrder
   bloodGroup?: Prisma.SortOrder
+  isDeleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
@@ -243,6 +261,8 @@ export type PatientWhereUniqueInput = Prisma.AtLeast<{
   phoneNo?: Prisma.StringFilter<"Patient"> | string
   address?: Prisma.StringFilter<"Patient"> | string
   bloodGroup?: Prisma.EnumBloodGroupFilter<"Patient"> | $Enums.BloodGroup
+  isDeleted?: Prisma.BoolFilter<"Patient"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"Patient"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Patient"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Patient"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -257,6 +277,8 @@ export type PatientOrderByWithAggregationInput = {
   phoneNo?: Prisma.SortOrder
   address?: Prisma.SortOrder
   bloodGroup?: Prisma.SortOrder
+  isDeleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.PatientCountOrderByAggregateInput
@@ -275,6 +297,8 @@ export type PatientScalarWhereWithAggregatesInput = {
   phoneNo?: Prisma.StringWithAggregatesFilter<"Patient"> | string
   address?: Prisma.StringWithAggregatesFilter<"Patient"> | string
   bloodGroup?: Prisma.EnumBloodGroupWithAggregatesFilter<"Patient"> | $Enums.BloodGroup
+  isDeleted?: Prisma.BoolWithAggregatesFilter<"Patient"> | boolean
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Patient"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Patient"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Patient"> | Date | string
 }
@@ -286,6 +310,8 @@ export type PatientCreateInput = {
   phoneNo: string
   address: string
   bloodGroup: $Enums.BloodGroup
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutPatientInput
@@ -300,6 +326,8 @@ export type PatientUncheckedCreateInput = {
   phoneNo: string
   address: string
   bloodGroup: $Enums.BloodGroup
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   bloodRequests?: Prisma.BloodRequestUncheckedCreateNestedManyWithoutPatientInput
@@ -312,6 +340,8 @@ export type PatientUpdateInput = {
   phoneNo?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
   bloodGroup?: Prisma.EnumBloodGroupFieldUpdateOperationsInput | $Enums.BloodGroup
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutPatientNestedInput
@@ -326,6 +356,8 @@ export type PatientUncheckedUpdateInput = {
   phoneNo?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
   bloodGroup?: Prisma.EnumBloodGroupFieldUpdateOperationsInput | $Enums.BloodGroup
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   bloodRequests?: Prisma.BloodRequestUncheckedUpdateManyWithoutPatientNestedInput
@@ -339,6 +371,8 @@ export type PatientCreateManyInput = {
   phoneNo: string
   address: string
   bloodGroup: $Enums.BloodGroup
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -350,6 +384,8 @@ export type PatientUpdateManyMutationInput = {
   phoneNo?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
   bloodGroup?: Prisma.EnumBloodGroupFieldUpdateOperationsInput | $Enums.BloodGroup
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -362,6 +398,8 @@ export type PatientUncheckedUpdateManyInput = {
   phoneNo?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
   bloodGroup?: Prisma.EnumBloodGroupFieldUpdateOperationsInput | $Enums.BloodGroup
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -379,6 +417,8 @@ export type PatientCountOrderByAggregateInput = {
   phoneNo?: Prisma.SortOrder
   address?: Prisma.SortOrder
   bloodGroup?: Prisma.SortOrder
+  isDeleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -391,6 +431,8 @@ export type PatientMaxOrderByAggregateInput = {
   phoneNo?: Prisma.SortOrder
   address?: Prisma.SortOrder
   bloodGroup?: Prisma.SortOrder
+  isDeleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -403,6 +445,8 @@ export type PatientMinOrderByAggregateInput = {
   phoneNo?: Prisma.SortOrder
   address?: Prisma.SortOrder
   bloodGroup?: Prisma.SortOrder
+  isDeleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -465,6 +509,8 @@ export type PatientCreateWithoutBloodRequestsInput = {
   phoneNo: string
   address: string
   bloodGroup: $Enums.BloodGroup
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutPatientInput
@@ -478,6 +524,8 @@ export type PatientUncheckedCreateWithoutBloodRequestsInput = {
   phoneNo: string
   address: string
   bloodGroup: $Enums.BloodGroup
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -505,6 +553,8 @@ export type PatientUpdateWithoutBloodRequestsInput = {
   phoneNo?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
   bloodGroup?: Prisma.EnumBloodGroupFieldUpdateOperationsInput | $Enums.BloodGroup
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutPatientNestedInput
@@ -518,6 +568,8 @@ export type PatientUncheckedUpdateWithoutBloodRequestsInput = {
   phoneNo?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
   bloodGroup?: Prisma.EnumBloodGroupFieldUpdateOperationsInput | $Enums.BloodGroup
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -529,6 +581,8 @@ export type PatientCreateWithoutUserInput = {
   phoneNo: string
   address: string
   bloodGroup: $Enums.BloodGroup
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   bloodRequests?: Prisma.BloodRequestCreateNestedManyWithoutPatientInput
@@ -541,6 +595,8 @@ export type PatientUncheckedCreateWithoutUserInput = {
   phoneNo: string
   address: string
   bloodGroup: $Enums.BloodGroup
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   bloodRequests?: Prisma.BloodRequestUncheckedCreateNestedManyWithoutPatientInput
@@ -569,6 +625,8 @@ export type PatientUpdateWithoutUserInput = {
   phoneNo?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
   bloodGroup?: Prisma.EnumBloodGroupFieldUpdateOperationsInput | $Enums.BloodGroup
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   bloodRequests?: Prisma.BloodRequestUpdateManyWithoutPatientNestedInput
@@ -581,6 +639,8 @@ export type PatientUncheckedUpdateWithoutUserInput = {
   phoneNo?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
   bloodGroup?: Prisma.EnumBloodGroupFieldUpdateOperationsInput | $Enums.BloodGroup
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   bloodRequests?: Prisma.BloodRequestUncheckedUpdateManyWithoutPatientNestedInput
@@ -625,6 +685,8 @@ export type PatientSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   phoneNo?: boolean
   address?: boolean
   bloodGroup?: boolean
+  isDeleted?: boolean
+  deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -640,6 +702,8 @@ export type PatientSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   phoneNo?: boolean
   address?: boolean
   bloodGroup?: boolean
+  isDeleted?: boolean
+  deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -653,6 +717,8 @@ export type PatientSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   phoneNo?: boolean
   address?: boolean
   bloodGroup?: boolean
+  isDeleted?: boolean
+  deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -666,11 +732,13 @@ export type PatientSelectScalar = {
   phoneNo?: boolean
   address?: boolean
   bloodGroup?: boolean
+  isDeleted?: boolean
+  deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type PatientOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "name" | "email" | "phoneNo" | "address" | "bloodGroup" | "createdAt" | "updatedAt", ExtArgs["result"]["patient"]>
+export type PatientOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "name" | "email" | "phoneNo" | "address" | "bloodGroup" | "isDeleted" | "deletedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["patient"]>
 export type PatientInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   bloodRequests?: boolean | Prisma.Patient$bloodRequestsArgs<ExtArgs>
@@ -697,6 +765,8 @@ export type $PatientPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     phoneNo: string
     address: string
     bloodGroup: $Enums.BloodGroup
+    isDeleted: boolean
+    deletedAt: Date | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["patient"]>
@@ -1131,6 +1201,8 @@ export interface PatientFieldRefs {
   readonly phoneNo: Prisma.FieldRef<"Patient", 'String'>
   readonly address: Prisma.FieldRef<"Patient", 'String'>
   readonly bloodGroup: Prisma.FieldRef<"Patient", 'BloodGroup'>
+  readonly isDeleted: Prisma.FieldRef<"Patient", 'Boolean'>
+  readonly deletedAt: Prisma.FieldRef<"Patient", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"Patient", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Patient", 'DateTime'>
 }

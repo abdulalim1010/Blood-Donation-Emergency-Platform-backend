@@ -46,6 +46,8 @@ export type BloodRequestMinAggregateOutputType = {
   neededAt: Date | null
   description: string | null
   status: $Enums.BloodRequestStatus | null
+  isDeleted: boolean | null
+  deletedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -62,6 +64,8 @@ export type BloodRequestMaxAggregateOutputType = {
   neededAt: Date | null
   description: string | null
   status: $Enums.BloodRequestStatus | null
+  isDeleted: boolean | null
+  deletedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -78,6 +82,8 @@ export type BloodRequestCountAggregateOutputType = {
   neededAt: number
   description: number
   status: number
+  isDeleted: number
+  deletedAt: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -104,6 +110,8 @@ export type BloodRequestMinAggregateInputType = {
   neededAt?: true
   description?: true
   status?: true
+  isDeleted?: true
+  deletedAt?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -120,6 +128,8 @@ export type BloodRequestMaxAggregateInputType = {
   neededAt?: true
   description?: true
   status?: true
+  isDeleted?: true
+  deletedAt?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -136,6 +146,8 @@ export type BloodRequestCountAggregateInputType = {
   neededAt?: true
   description?: true
   status?: true
+  isDeleted?: true
+  deletedAt?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -239,6 +251,8 @@ export type BloodRequestGroupByOutputType = {
   neededAt: Date
   description: string | null
   status: $Enums.BloodRequestStatus
+  isDeleted: boolean
+  deletedAt: Date | null
   createdAt: Date
   updatedAt: Date
   _count: BloodRequestCountAggregateOutputType | null
@@ -278,6 +292,8 @@ export type BloodRequestWhereInput = {
   neededAt?: Prisma.DateTimeFilter<"BloodRequest"> | Date | string
   description?: Prisma.StringNullableFilter<"BloodRequest"> | string | null
   status?: Prisma.EnumBloodRequestStatusFilter<"BloodRequest"> | $Enums.BloodRequestStatus
+  isDeleted?: Prisma.BoolFilter<"BloodRequest"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"BloodRequest"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"BloodRequest"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"BloodRequest"> | Date | string
   patient?: Prisma.XOR<Prisma.PatientScalarRelationFilter, Prisma.PatientWhereInput>
@@ -296,6 +312,8 @@ export type BloodRequestOrderByWithRelationInput = {
   neededAt?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
+  isDeleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   patient?: Prisma.PatientOrderByWithRelationInput
@@ -317,6 +335,8 @@ export type BloodRequestWhereUniqueInput = Prisma.AtLeast<{
   neededAt?: Prisma.DateTimeFilter<"BloodRequest"> | Date | string
   description?: Prisma.StringNullableFilter<"BloodRequest"> | string | null
   status?: Prisma.EnumBloodRequestStatusFilter<"BloodRequest"> | $Enums.BloodRequestStatus
+  isDeleted?: Prisma.BoolFilter<"BloodRequest"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"BloodRequest"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"BloodRequest"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"BloodRequest"> | Date | string
   patient?: Prisma.XOR<Prisma.PatientScalarRelationFilter, Prisma.PatientWhereInput>
@@ -335,6 +355,8 @@ export type BloodRequestOrderByWithAggregationInput = {
   neededAt?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
+  isDeleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.BloodRequestCountOrderByAggregateInput
@@ -359,6 +381,8 @@ export type BloodRequestScalarWhereWithAggregatesInput = {
   neededAt?: Prisma.DateTimeWithAggregatesFilter<"BloodRequest"> | Date | string
   description?: Prisma.StringNullableWithAggregatesFilter<"BloodRequest"> | string | null
   status?: Prisma.EnumBloodRequestStatusWithAggregatesFilter<"BloodRequest"> | $Enums.BloodRequestStatus
+  isDeleted?: Prisma.BoolWithAggregatesFilter<"BloodRequest"> | boolean
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"BloodRequest"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"BloodRequest"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"BloodRequest"> | Date | string
 }
@@ -374,6 +398,8 @@ export type BloodRequestCreateInput = {
   neededAt: Date | string
   description?: string | null
   status?: $Enums.BloodRequestStatus
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   patient: Prisma.PatientCreateNestedOneWithoutBloodRequestsInput
@@ -392,6 +418,8 @@ export type BloodRequestUncheckedCreateInput = {
   neededAt: Date | string
   description?: string | null
   status?: $Enums.BloodRequestStatus
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   donationHistory?: Prisma.DonationHistoryUncheckedCreateNestedManyWithoutBloodRequestInput
@@ -408,6 +436,8 @@ export type BloodRequestUpdateInput = {
   neededAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumBloodRequestStatusFieldUpdateOperationsInput | $Enums.BloodRequestStatus
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   patient?: Prisma.PatientUpdateOneRequiredWithoutBloodRequestsNestedInput
@@ -426,6 +456,8 @@ export type BloodRequestUncheckedUpdateInput = {
   neededAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumBloodRequestStatusFieldUpdateOperationsInput | $Enums.BloodRequestStatus
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   donationHistory?: Prisma.DonationHistoryUncheckedUpdateManyWithoutBloodRequestNestedInput
@@ -443,6 +475,8 @@ export type BloodRequestCreateManyInput = {
   neededAt: Date | string
   description?: string | null
   status?: $Enums.BloodRequestStatus
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -458,6 +492,8 @@ export type BloodRequestUpdateManyMutationInput = {
   neededAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumBloodRequestStatusFieldUpdateOperationsInput | $Enums.BloodRequestStatus
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -474,6 +510,8 @@ export type BloodRequestUncheckedUpdateManyInput = {
   neededAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumBloodRequestStatusFieldUpdateOperationsInput | $Enums.BloodRequestStatus
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -490,6 +528,8 @@ export type BloodRequestCountOrderByAggregateInput = {
   neededAt?: Prisma.SortOrder
   description?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  isDeleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -510,6 +550,8 @@ export type BloodRequestMaxOrderByAggregateInput = {
   neededAt?: Prisma.SortOrder
   description?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  isDeleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -526,6 +568,8 @@ export type BloodRequestMinOrderByAggregateInput = {
   neededAt?: Prisma.SortOrder
   description?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  isDeleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -579,6 +623,14 @@ export type NullableStringFieldUpdateOperationsInput = {
 
 export type EnumBloodRequestStatusFieldUpdateOperationsInput = {
   set?: $Enums.BloodRequestStatus
+}
+
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
+}
+
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: Date | string | null
 }
 
 export type BloodRequestCreateNestedOneWithoutDonationHistoryInput = {
@@ -648,6 +700,8 @@ export type BloodRequestCreateWithoutDonationHistoryInput = {
   neededAt: Date | string
   description?: string | null
   status?: $Enums.BloodRequestStatus
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   patient: Prisma.PatientCreateNestedOneWithoutBloodRequestsInput
@@ -665,6 +719,8 @@ export type BloodRequestUncheckedCreateWithoutDonationHistoryInput = {
   neededAt: Date | string
   description?: string | null
   status?: $Enums.BloodRequestStatus
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -696,6 +752,8 @@ export type BloodRequestUpdateWithoutDonationHistoryInput = {
   neededAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumBloodRequestStatusFieldUpdateOperationsInput | $Enums.BloodRequestStatus
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   patient?: Prisma.PatientUpdateOneRequiredWithoutBloodRequestsNestedInput
@@ -713,6 +771,8 @@ export type BloodRequestUncheckedUpdateWithoutDonationHistoryInput = {
   neededAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumBloodRequestStatusFieldUpdateOperationsInput | $Enums.BloodRequestStatus
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -728,6 +788,8 @@ export type BloodRequestCreateWithoutPatientInput = {
   neededAt: Date | string
   description?: string | null
   status?: $Enums.BloodRequestStatus
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   donationHistory?: Prisma.DonationHistoryCreateNestedManyWithoutBloodRequestInput
@@ -744,6 +806,8 @@ export type BloodRequestUncheckedCreateWithoutPatientInput = {
   neededAt: Date | string
   description?: string | null
   status?: $Enums.BloodRequestStatus
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   donationHistory?: Prisma.DonationHistoryUncheckedCreateNestedManyWithoutBloodRequestInput
@@ -790,6 +854,8 @@ export type BloodRequestScalarWhereInput = {
   neededAt?: Prisma.DateTimeFilter<"BloodRequest"> | Date | string
   description?: Prisma.StringNullableFilter<"BloodRequest"> | string | null
   status?: Prisma.EnumBloodRequestStatusFilter<"BloodRequest"> | $Enums.BloodRequestStatus
+  isDeleted?: Prisma.BoolFilter<"BloodRequest"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"BloodRequest"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"BloodRequest"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"BloodRequest"> | Date | string
 }
@@ -805,6 +871,8 @@ export type BloodRequestCreateManyPatientInput = {
   neededAt: Date | string
   description?: string | null
   status?: $Enums.BloodRequestStatus
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -820,6 +888,8 @@ export type BloodRequestUpdateWithoutPatientInput = {
   neededAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumBloodRequestStatusFieldUpdateOperationsInput | $Enums.BloodRequestStatus
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   donationHistory?: Prisma.DonationHistoryUpdateManyWithoutBloodRequestNestedInput
@@ -836,6 +906,8 @@ export type BloodRequestUncheckedUpdateWithoutPatientInput = {
   neededAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumBloodRequestStatusFieldUpdateOperationsInput | $Enums.BloodRequestStatus
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   donationHistory?: Prisma.DonationHistoryUncheckedUpdateManyWithoutBloodRequestNestedInput
@@ -852,6 +924,8 @@ export type BloodRequestUncheckedUpdateManyWithoutPatientInput = {
   neededAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumBloodRequestStatusFieldUpdateOperationsInput | $Enums.BloodRequestStatus
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -899,6 +973,8 @@ export type BloodRequestSelect<ExtArgs extends runtime.Types.Extensions.Internal
   neededAt?: boolean
   description?: boolean
   status?: boolean
+  isDeleted?: boolean
+  deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   patient?: boolean | Prisma.PatientDefaultArgs<ExtArgs>
@@ -918,6 +994,8 @@ export type BloodRequestSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   neededAt?: boolean
   description?: boolean
   status?: boolean
+  isDeleted?: boolean
+  deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   patient?: boolean | Prisma.PatientDefaultArgs<ExtArgs>
@@ -935,6 +1013,8 @@ export type BloodRequestSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   neededAt?: boolean
   description?: boolean
   status?: boolean
+  isDeleted?: boolean
+  deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   patient?: boolean | Prisma.PatientDefaultArgs<ExtArgs>
@@ -952,11 +1032,13 @@ export type BloodRequestSelectScalar = {
   neededAt?: boolean
   description?: boolean
   status?: boolean
+  isDeleted?: boolean
+  deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type BloodRequestOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "patientId" | "bloodGroup" | "unitsNeeded" | "hospitalName" | "location" | "contactNumber" | "urgency" | "neededAt" | "description" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["bloodRequest"]>
+export type BloodRequestOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "patientId" | "bloodGroup" | "unitsNeeded" | "hospitalName" | "location" | "contactNumber" | "urgency" | "neededAt" | "description" | "status" | "isDeleted" | "deletedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["bloodRequest"]>
 export type BloodRequestInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   patient?: boolean | Prisma.PatientDefaultArgs<ExtArgs>
   donationHistory?: boolean | Prisma.BloodRequest$donationHistoryArgs<ExtArgs>
@@ -987,6 +1069,8 @@ export type $BloodRequestPayload<ExtArgs extends runtime.Types.Extensions.Intern
     neededAt: Date
     description: string | null
     status: $Enums.BloodRequestStatus
+    isDeleted: boolean
+    deletedAt: Date | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["bloodRequest"]>
@@ -1425,6 +1509,8 @@ export interface BloodRequestFieldRefs {
   readonly neededAt: Prisma.FieldRef<"BloodRequest", 'DateTime'>
   readonly description: Prisma.FieldRef<"BloodRequest", 'String'>
   readonly status: Prisma.FieldRef<"BloodRequest", 'BloodRequestStatus'>
+  readonly isDeleted: Prisma.FieldRef<"BloodRequest", 'Boolean'>
+  readonly deletedAt: Prisma.FieldRef<"BloodRequest", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"BloodRequest", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"BloodRequest", 'DateTime'>
 }

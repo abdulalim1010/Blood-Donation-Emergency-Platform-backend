@@ -1,5 +1,6 @@
 import type { Request, Response } from "express";
 import { PatientService } from "./patient.service.js";
+import { catchAsync } from "../../utils/catchAsync.js";
 
 const createPatientProfile = async (
   req: Request,
@@ -93,10 +94,39 @@ const deleteMyPatientProfile = async (
     });
   }
 };
+const getAllPatients = catchAsync(
+  async (req: Request, res: Response) => {
+    const page = Math.max(Number(req.query.page) || 1, 1);
+
+    const limit = Math.min(
+      Math.max(Number(req.query.limit) || 10, 1),
+      100,
+    );
+
+    const search =
+      typeof req.query.search === "string"
+        ? req.query.search
+        : undefined;
+
+    const result = await PatientService.getAllPatients(
+      page,
+      limit,
+      search,
+    );
+
+    res.status(200).json({
+      success: true,
+      message: "Patients retrieved successfully",
+      meta: result.meta,
+      data: result.data,
+    });
+  },
+);
 
 export const PatientController = {
   createPatientProfile,
   getMyPatientProfile,
   updateMyPatientProfile,
   deleteMyPatientProfile,
+  getAllPatients, 
 };

@@ -88,10 +88,74 @@ const deleteMyPatientProfile = async (userId: string) => {
 
   return null;
 };
+const getAllPatients = async (
+  page: number,
+  limit: number,
+  search?: string,
+) => {
+  const skip = (page - 1) * limit;
+
+  const where = search
+    ? {
+        OR: [
+          {
+            name: {
+              contains: search,
+              mode: "insensitive" as const,
+            },
+          },
+          {
+            email: {
+              contains: search,
+              mode: "insensitive" as const,
+            },
+          },
+          {
+            phoneNo: {
+              contains: search,
+              mode: "insensitive" as const,
+            },
+          },
+          {
+            address: {
+              contains: search,
+              mode: "insensitive" as const,
+            },
+          },
+        ],
+      }
+    : {};
+
+  const [patients, total] = await Promise.all([
+    prisma.patient.findMany({
+      where,
+      skip,
+      take: limit,
+      orderBy: {
+        createdAt: "desc",
+      },
+    }),
+
+    prisma.patient.count({
+      where,
+    }),
+  ]);
+
+  return {
+    meta: {
+      page,
+      limit,
+      total,
+      totalPage: Math.ceil(total / limit),
+    },
+    data: patients,
+  };
+};
 
 export const PatientService = {
   createPatientProfile,
   getMyPatientProfile,
   updateMyPatientProfile,
   deleteMyPatientProfile,
+  getAllPatients,
 };

@@ -492,10 +492,6 @@ export type DonorUpdateOneRequiredWithoutDonationHistoryNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.DonorUpdateToOneWithWhereWithoutDonationHistoryInput, Prisma.DonorUpdateWithoutDonationHistoryInput>, Prisma.DonorUncheckedUpdateWithoutDonationHistoryInput>
 }
 
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
-}
-
 export type DonorCreateNestedOneWithoutUserInput = {
   create?: Prisma.XOR<Prisma.DonorCreateWithoutUserInput, Prisma.DonorUncheckedCreateWithoutUserInput>
   connectOrCreate?: Prisma.DonorCreateOrConnectWithoutUserInput

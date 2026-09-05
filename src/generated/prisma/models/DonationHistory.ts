@@ -433,10 +433,6 @@ export type DonationHistoryUncheckedUpdateManyWithoutBloodRequestNestedInput = {
   deleteMany?: Prisma.DonationHistoryScalarWhereInput | Prisma.DonationHistoryScalarWhereInput[]
 }
 
-export type NullableDateTimeFieldUpdateOperationsInput = {
-  set?: Date | string | null
-}
-
 export type EnumDonationStatusFieldUpdateOperationsInput = {
   set?: $Enums.DonationStatus
 }

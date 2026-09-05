@@ -4,6 +4,7 @@ import { PatientController } from "./patient.controller.js";
 import { PatientValidation } from "./patient.validation.js";
 import { validateRequest } from "../../middleware/validRequest.js";
 import { auth } from "../../middleware/checkAuth.js";
+import { Role } from "../../../generated/prisma/browser.js";
 
 const router = Router();
 
@@ -32,5 +33,9 @@ router.delete(
   auth(),
   PatientController.deleteMyPatientProfile,
 );
-
+router.get(
+  "/",
+  auth(Role.ADMIN, Role.SUPER_ADMIN),
+  PatientController.getAllPatients,
+);
 export const PatientRoutes = router;
