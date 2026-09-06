@@ -7,6 +7,8 @@ import { catchAsync } from "../../utils/catchAsync.js";
 
 import { AppError } from "../../utils/AppError.js";
 import { sendResponse } from "../../utils/sendResponse.js";
+import prisma from "../../lib/prisma.js";
+import { deleteFromCloudinary, uploadToCloudinary } from "../../utils/uploadToCloudinary.js";
 ;
 
 const registerUser = catchAsync(async (req: Request, res: Response) => {
@@ -210,6 +212,75 @@ const resetPassword = catchAsync(async (req: Request, res: Response) => {
 	});
 });
 
+
+
+const uploadProfileImage = catchAsync(
+  async (req: Request, res: Response) => {
+    const userId = req.user!.userId;
+
+    if (!req.file) {
+      throw new AppError(
+        httpStatus.BAD_REQUEST,
+        "Please upload an image",
+      );
+    }
+
+    const user = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+
+    if (!user) {
+      throw new AppError(
+        httpStatus.NOT_FOUND,
+        "User not found",
+      );
+    }
+
+    // Upload new image first
+    const result = await uploadToCloudinary(
+      req.file.buffer,
+      "blood-donation/profile-images",
+    );
+
+    try {
+      // Update database
+      const updatedUser = await prisma.user.update({
+        where: {
+          id: userId,
+        },
+        data: {
+          imageUrl: result.secure_url,
+          imagePublicId: result.public_id,
+        },
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          imageUrl: true,
+          imagePublicId: true,
+        },
+      });
+
+      // Delete old image after successful DB update
+      if (user.imagePublicId) {
+        await deleteFromCloudinary(user.imagePublicId);
+      }
+
+      res.status(200).json({
+        success: true,
+        message: "Profile image updated successfully",
+        data: updatedUser,
+      });
+    } catch (error) {
+      // If database update fails, remove newly uploaded image
+      await deleteFromCloudinary(result.public_id);
+
+      throw error;
+    }
+  },
+);
 export const AuthController = {
 	registerUser,
 	verifyEmail,
@@ -219,4 +290,6 @@ export const AuthController = {
 	googleLogin,
 	forgotPassword,
 	resetPassword,
+	uploadProfileImage,
+	
 };

@@ -5,6 +5,7 @@ import { Role } from "../../../generated/prisma/enums.js";
 import { AuthController } from "./auth.controller.js";
 import { validateRequest } from "../../middleware/validRequest.js";
 import { auth } from "../../middleware/checkAuth.js";
+import { upload } from "../../middleware/upload.js";
 
 
 const router = Router();
@@ -67,5 +68,12 @@ router.post(
 	"/reset-password",
 	validateRequest(UserValidation.ResetPasswordZodSchema),
 	AuthController.resetPassword,
+);
+
+router.patch(
+  "/profile/image",
+  auth(),
+  upload.single("image"),
+  AuthController.uploadProfileImage,
 );
 export const AuthRoutes = router;
