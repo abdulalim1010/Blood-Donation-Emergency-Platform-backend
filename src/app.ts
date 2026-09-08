@@ -5,6 +5,7 @@ import { PatientRoutes } from "./app/module/patient/patient.route.js";
 import cookieParser from "cookie-parser";
 import { BloodRequestRoutes } from "./app/module/blood-request/blood-request.route.js";
 import { DonorRoutes } from "./app/module/donor/donor.route.js";
+import { PaymentRoutes } from "./app/module/payment/payment.route.js";
 
 
 
@@ -23,6 +24,10 @@ app.use(
 app.use(
   "/api/v1/donor",
   DonorRoutes,
+);
+app.use(
+  "/api/v1/payment",
+  PaymentRoutes,
 );
 
 export default app;
