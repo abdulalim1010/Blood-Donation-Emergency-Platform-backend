@@ -4,6 +4,8 @@ interface BkashTokenResponse {
   id_token: string;
   token_type: string;
   expires_in: number;
+  statusCode?: string;
+  statusMessage?: string;
 }
 
 let bkashToken: string | null = null;
@@ -32,10 +34,7 @@ export const getBkashToken = async (): Promise<string> => {
   );
 
   const data =
-    (await response.json()) as BkashTokenResponse & {
-      statusCode?: string;
-      statusMessage?: string;
-    };
+    (await response.json()) as BkashTokenResponse;
 
   if (!response.ok || !data.id_token) {
     throw new Error(
@@ -45,17 +44,21 @@ export const getBkashToken = async (): Promise<string> => {
 
   bkashToken = data.id_token;
 
-  // কিছু buffer রেখে token cache করছি
-  tokenExpiresAt = Date.now() + (data.expires_in - 60) * 1000;
+  tokenExpiresAt =
+    Date.now() + (data.expires_in - 60) * 1000;
 
   return bkashToken;
 };
+
+
 interface CreatePaymentResponse {
   paymentID: string;
   bkashURL: string;
   transactionStatus: string;
   amount: string;
   merchantInvoiceNumber: string;
+  statusCode?: string;
+  statusMessage?: string;
 }
 
 export const createBkashPayment = async (
@@ -86,20 +89,45 @@ export const createBkashPayment = async (
     },
   );
 
-  const data =
-    (await response.json()) as CreatePaymentResponse & {
-      statusCode?: string;
-      statusMessage?: string;
-    };
+  // এখানে debugging করছি
+  const responseText = await response.text();
+
+  console.log(
+    "========== BKASH CREATE PAYMENT ==========",
+  );
+  console.log("Status:", response.status);
+  console.log(
+    "Content-Type:",
+    response.headers.get("content-type"),
+  );
+  console.log("Raw Response:", responseText);
+  console.log(
+    "==========================================",
+  );
+
+  let data: CreatePaymentResponse;
+
+  try {
+    data = JSON.parse(responseText);
+  } catch (error) {
+    console.error("bKash JSON parse error:", error);
+
+    throw new Error(
+      `Invalid response from bKash: ${responseText}`,
+    );
+  }
 
   if (!response.ok || !data.paymentID) {
     throw new Error(
-      data.statusMessage || "Failed to create bKash payment",
+      data.statusMessage ||
+        "Failed to create bKash payment",
     );
   }
 
   return data;
 };
+
+
 interface ExecutePaymentResponse {
   paymentID: string;
   trxID: string;
@@ -108,6 +136,8 @@ interface ExecutePaymentResponse {
   currency: string;
   intent: string;
   merchantInvoiceNumber: string;
+  statusCode?: string;
+  statusMessage?: string;
 }
 
 export const executeBkashPayment = async (
@@ -129,14 +159,12 @@ export const executeBkashPayment = async (
   );
 
   const data =
-    (await response.json()) as ExecutePaymentResponse & {
-      statusCode?: string;
-      statusMessage?: string;
-    };
+    (await response.json()) as ExecutePaymentResponse;
 
   if (!response.ok) {
     throw new Error(
-      data.statusMessage || "Failed to execute bKash payment",
+      data.statusMessage ||
+        "Failed to execute bKash payment",
     );
   }
 
