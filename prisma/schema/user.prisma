@@ -23,6 +23,7 @@ model User {
   donor   Donor?
 
   notifications Notification[]
+  payments      Payment[]
 
   @@map("users")
 }

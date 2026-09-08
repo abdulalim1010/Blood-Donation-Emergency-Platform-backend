@@ -43,6 +43,11 @@ export type Notification = Prisma.NotificationModel
  */
 export type Patient = Prisma.PatientModel
 /**
+ * Model Payment
+ * 
+ */
+export type Payment = Prisma.PaymentModel
+/**
  * Model User
  * 
  */

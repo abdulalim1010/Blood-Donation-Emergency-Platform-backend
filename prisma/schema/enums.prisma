@@ -56,3 +56,14 @@ enum NotificationType {
   SYSTEM
   OTHER
 }
+
+enum PaymentMethod {
+  BKASH
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  CANCELLED
+}
