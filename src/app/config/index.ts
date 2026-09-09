@@ -32,12 +32,12 @@ const config = {
   cloudinary_api_key: process.env.CLOUDINARY_API_KEY!,
   cloudinary_api_secret: process.env.CLOUDINARY_API_SECRET!,  
 
-bkash_base_url: process.env.BKASH_BASE_URL!,
-bkash_app_key: process.env.BKASH_APP_KEY!,
-bkash_app_secret: process.env.BKASH_APP_SECRET!,
-bkash_username: process.env.BKASH_USERNAME!,
-bkash_password: process.env.BKASH_PASSWORD!,
-bkash_callback_url: process.env.BKASH_CALLBACK_URL!,
+  bkash_base_url: (process.env.BKASH_BASE_URL ?? "").replace(/\/+$/, ""),
+  bkash_app_key: process.env.BKASH_APP_KEY!,
+  bkash_app_secret: process.env.BKASH_APP_SECRET!,
+  bkash_username: process.env.BKASH_USERNAME!,
+  bkash_password: process.env.BKASH_PASSWORD!,
+  bkash_callback_url: process.env.BKASH_CALLBACK_URL!,
 
 
   node_env: process.env.NODE_ENV || "development",

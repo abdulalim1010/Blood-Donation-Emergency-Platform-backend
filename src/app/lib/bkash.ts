@@ -1,6 +1,6 @@
 import config from "../config/index.js";
 
-interface BkashTokenResponse {
+export interface BkashTokenResponse {
   id_token: string;
   token_type: string;
   expires_in: number;
@@ -9,7 +9,7 @@ interface BkashTokenResponse {
   statusMessage?: string;
 }
 
-interface BkashCreatePaymentResponse {
+export interface BkashCreatePaymentResponse {
   paymentID: string;
   bkashURL: string;
   paymentCreateTime?: string;
@@ -22,9 +22,9 @@ interface BkashCreatePaymentResponse {
   statusMessage?: string;
 }
 
-interface BkashExecutePaymentResponse {
+export interface BkashExecutePaymentResponse {
   paymentID: string;
-  trxID: string;
+  trxID?: string;
   transactionStatus: string;
   amount: string;
   currency: string;
@@ -37,34 +37,52 @@ interface BkashExecutePaymentResponse {
 let bkashToken: string | null = null;
 let tokenExpiresAt = 0;
 
-/* =========================================
-   GET BKASH TOKEN
-========================================= */
+const BKASH_SUCCESS_CODE = "0000";
 
-export const getBkashToken = async (): Promise<string> => {
-  // Reuse token if still valid
-  if (bkashToken && Date.now() < tokenExpiresAt) {
+const bkashBaseUrl = () => config.bkash_base_url.replace(/\/+$/, "");
+
+const parseJson = <T>(responseText: string, context: string): T => {
+  try {
+    return JSON.parse(responseText) as T;
+  } catch {
+    throw new Error(
+      `Invalid JSON response from bKash ${context} API: ${responseText}`,
+    );
+  }
+};
+
+const isSuccess = (statusCode?: string) =>
+  !statusCode || statusCode === BKASH_SUCCESS_CODE;
+
+const bkashHeaders = (token?: string) => {
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    "X-APP-Key": config.bkash_app_key,
+  };
+
+  if (token) {
+    headers.Authorization = token;
+  }
+
+  return headers;
+};
+
+export const getBkashToken = async (forceRefresh = false): Promise<string> => {
+  if (!forceRefresh && bkashToken && Date.now() < tokenExpiresAt) {
     return bkashToken;
   }
 
-  const url =
-    `${config.bkash_base_url}/checkout/token/grant`;
-
-  console.log("========== BKASH TOKEN REQUEST ==========");
-  console.log("URL:", url);
-  console.log("=========================================");
+  const url = `${bkashBaseUrl()}/checkout/token/grant`;
 
   const response = await fetch(url, {
     method: "POST",
-
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",
-
       username: config.bkash_username,
       password: config.bkash_password,
     },
-
     body: JSON.stringify({
       app_key: config.bkash_app_key,
       app_secret: config.bkash_app_secret,
@@ -72,23 +90,11 @@ export const getBkashToken = async (): Promise<string> => {
   });
 
   const responseText = await response.text();
+  const data = parseJson<BkashTokenResponse>(responseText, "token");
 
-  console.log("========== BKASH TOKEN RESPONSE ==========");
-  console.log("Status:", response.status);
-  console.log("Response:", responseText);
-  console.log("==========================================");
-
-  let data: BkashTokenResponse;
-
-  try {
-    data = JSON.parse(responseText);
-  } catch {
-    throw new Error(
-      `Invalid JSON response from bKash token API: ${responseText}`,
-    );
-  }
-
-  if (!response.ok || !data.id_token) {
+  if (!response.ok || !data.id_token || !isSuccess(data.statusCode)) {
+    bkashToken = null;
+    tokenExpiresAt = 0;
     throw new Error(
       data.statusMessage ||
         `Failed to get bKash access token. Status: ${response.status}`,
@@ -96,152 +102,120 @@ export const getBkashToken = async (): Promise<string> => {
   }
 
   bkashToken = data.id_token;
-
   const expiresIn = data.expires_in || 3600;
-
-  tokenExpiresAt =
-    Date.now() + Math.max(expiresIn - 60, 60) * 1000;
-
-  console.log("✅ bKash token received successfully");
+  tokenExpiresAt = Date.now() + Math.max(expiresIn - 60, 60) * 1000;
 
   return bkashToken;
 };
 
+const authorizedRequest = async (
+  path: string,
+  body: Record<string, string>,
+  context: string,
+) => {
+  const send = async (forceRefresh: boolean) => {
+    const token = await getBkashToken(forceRefresh);
+    return fetch(`${bkashBaseUrl()}${path}`, {
+      method: "POST",
+      headers: bkashHeaders(token),
+      body: JSON.stringify(body),
+    });
+  };
 
-/* =========================================
-   CREATE PAYMENT
-========================================= */
+  let response = await send(false);
+
+  if (response.status === 401) {
+    response = await send(true);
+  }
+
+  const responseText = await response.text();
+  return {
+    response,
+    data: parseJson<Record<string, string>>(responseText, context),
+    responseText,
+  };
+};
 
 export const createBkashPayment = async (
   amount: number,
   merchantInvoiceNumber: string,
-) => {
-  const token = await getBkashToken();
-
-  const url =
-    `${config.bkash_base_url}/checkout/create`;
-
-  console.log("========== BKASH CREATE REQUEST ==========");
-  console.log("URL:", url);
-  console.log("==========================================");
-
-  const response = await fetch(url, {
-    method: "POST",
-
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-
-      Authorization: token,
-      "X-APP-Key": config.bkash_app_key,
-    },
-
-    body: JSON.stringify({
+  payerReference: string,
+): Promise<BkashCreatePaymentResponse> => {
+  const { response, data } = await authorizedRequest(
+    "/checkout/create",
+    {
       mode: "0011",
-
-      payerReference: " ",
-      
+      payerReference: payerReference || "01XXXXXXXXX",
       callbackURL: config.bkash_callback_url,
-
       amount: amount.toFixed(2),
-
       currency: "BDT",
-
       intent: "sale",
-
       merchantInvoiceNumber,
-    }),
-  });
+    },
+    "create",
+  );
 
-  const responseText = await response.text();
+  const payment = data as unknown as BkashCreatePaymentResponse;
 
-  console.log("========== BKASH CREATE RESPONSE ==========");
-  console.log("Status:", response.status);
-  console.log("Response:", responseText);
-  console.log("===========================================");
-
-  let data: BkashCreatePaymentResponse;
-
-  try {
-    data = JSON.parse(responseText);
-  } catch {
+  if (!response.ok || !payment.paymentID || !isSuccess(payment.statusCode)) {
     throw new Error(
-      `Invalid JSON response from bKash create API: ${responseText}`,
-    );
-  }
-
-  if (!response.ok || !data.paymentID) {
-    throw new Error(
-      data.statusMessage ||
+      payment.statusMessage ||
         `Failed to create bKash payment. Status: ${response.status}`,
     );
   }
 
-  console.log("✅ bKash payment created");
-  console.log("Payment ID:", data.paymentID);
-  console.log("bKash URL:", data.bkashURL);
-
-  return data;
+  return payment;
 };
 
-
-/* =========================================
-   EXECUTE PAYMENT
-========================================= */
-
-export const executeBkashPayment = async (
+export const queryBkashPayment = async (
   paymentID: string,
-) => {
-  const token = await getBkashToken();
+): Promise<BkashExecutePaymentResponse> => {
+  const { response, data } = await authorizedRequest(
+    "/checkout/payment/status",
+    { paymentID },
+    "query",
+  );
 
-  const url =
-    `${config.bkash_base_url}/checkout/execute`;
-
-  console.log("========== BKASH EXECUTE REQUEST ==========");
-  console.log("URL:", url);
-  console.log("===========================================");
-
-  const response = await fetch(url, {
-    method: "POST",
-
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-
-      Authorization: token,
-      "X-APP-Key": config.bkash_app_key,
-    },
-
-    body: JSON.stringify({
-      paymentID,
-    }),
-  });
-
-  const responseText = await response.text();
-
-  console.log("========== BKASH EXECUTE RESPONSE ==========");
-  console.log("Status:", response.status);
-  console.log("Response:", responseText);
-  console.log("============================================");
-
-  let data: BkashExecutePaymentResponse;
-
-  try {
-    data = JSON.parse(responseText);
-  } catch {
-    throw new Error(
-      `Invalid JSON response from bKash execute API: ${responseText}`,
-    );
-  }
+  const result = data as unknown as BkashExecutePaymentResponse;
 
   if (!response.ok) {
     throw new Error(
-      data.statusMessage ||
-        `Failed to execute bKash payment. Status: ${response.status}`,
+      result.statusMessage ||
+        `Failed to query bKash payment. Status: ${response.status}`,
     );
   }
 
-  console.log("✅ bKash payment executed");
+  return result;
+};
 
-  return data;
+export const executeBkashPayment = async (
+  paymentID: string,
+): Promise<BkashExecutePaymentResponse> => {
+  const { response, data } = await authorizedRequest(
+    "/checkout/execute",
+    { paymentID },
+    "execute",
+  );
+
+  const result = data as unknown as BkashExecutePaymentResponse;
+  const alreadyExecuted =
+    result.statusCode === "2062" ||
+    /already executed|already completed/i.test(result.statusMessage || "");
+
+  if (alreadyExecuted) {
+    return queryBkashPayment(paymentID);
+  }
+
+  if (isSuccess(result.statusCode) || result.trxID) {
+    return result;
+  }
+
+  if (!response.ok || !result.statusCode) {
+    return queryBkashPayment(paymentID);
+  }
+
+  throw new Error(
+    result.statusMessage ||
+      `Failed to execute bKash payment. Status: ${response.status}`,
+  );
 };
